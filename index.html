@@ -251,8 +251,8 @@
         .project-card { background: rgba(26,26,26,0.6); backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s, box-shadow 0.3s; transform-style: preserve-3d; will-change: transform; }
         .project-card:hover { border-color: var(--orange); box-shadow: 0 20px 40px rgba(249,115,22,0.12); z-index: 10; }
         .project-img { position: relative; height: 220px; overflow: hidden; }
-        .project-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-        .project-card:hover .project-img img { transform: scale(1.08); }
+        .project-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s, filter 0.5s; filter: blur(3px); }
+        .project-card:hover .project-img img { transform: scale(1.08); filter: blur(0); }
         .project-img-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.6); opacity: 0; transition: opacity 0.3s; display: flex; align-items: center; justify-content: center; gap: 1rem; }
         .project-card:hover .project-img-overlay { opacity: 1; }
         .overlay-btn { width: 42px; height: 42px; border-radius: 50%; background: var(--orange); display: flex; align-items: center; justify-content: center; color: var(--white); text-decoration: none; font-size: 1rem; transition: all 0.3s; }
@@ -503,7 +503,27 @@
             0% { transform: scale(1); filter: brightness(1); }
             100% { transform: scale(1.06); filter: brightness(1.05); }
         }
-        
+
+        /* ── TRAINING ── */
+        .training-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+        .train-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; display: flex; gap: 1.5rem; align-items: flex-start; transition: all 0.3s; }
+        .train-card:hover { border-color: var(--orange); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(249,115,22,0.1); }
+        .train-icon { width: 60px; height: 60px; background: rgba(249,115,22,0.1); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: var(--orange); font-size: 1.6rem; flex-shrink: 0; }
+        .train-info h3 { font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem; }
+        .train-org { color: var(--orange); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.4rem; }
+        .train-date { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem; }
+        .train-details { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; }
+
+        /* SCROLL TOP */
+        #scrollToTop {
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
+            background: rgba(26,26,26,0.8); border: 1px solid var(--border); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: var(--white);
+            font-size: 1.2rem; cursor: pointer; transition: all 0.3s; z-index: 1000;
+            opacity: 0; visibility: hidden; backdrop-filter: blur(10px);
+        }
+        #scrollToTop.show { opacity: 1; visibility: visible; }
+        #scrollToTop:hover { background: var(--orange); transform: translateY(-5px); box-shadow: 0 10px 25px var(--orange-glow); color: var(--white); border-color: var(--orange); }
 
     </style>
 </head>
@@ -519,6 +539,7 @@
         <li><a href="#home">Home</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#education">Education</a></li>
+        <li><a href="#training">Training</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#proof">Proof</a></li>
         <li><a href="#projects">Projects</a></li>
@@ -652,6 +673,28 @@
     </div>
 </section>
 
+<!-- ════════════ TRAINING ════════════ -->
+<section id="training" class="section-alt">
+    <div class="sec-header">
+        <span class="sec-tag">Vocational Training</span>
+        <h2 class="sec-title">My <span>Training</span></h2>
+        <div class="sec-line"></div>
+        <p class="sec-desc">Specialized training programs focusing on industrial skills and advanced development techniques.</p>
+    </div>
+    <div class="training-grid">
+        <div class="train-card" data-aos="fade-up">
+            <div class="train-icon"><i class="fas fa-laptop-code"></i></div>
+            <div class="train-info">
+                <h3>C++ Programming, OOPs & DSA</h3>
+                <div class="train-org">CSE Pathshala</div>
+                <div class="train-date"><i class="far fa-calendar-alt"></i> 1 Month Intensity Training</div>
+                <p class="train-details">Completed a comprehensive one-month training program focused on C++ Programming, Object-Oriented Programming (OOPs), and Data Structures and Algorithms (DSA). This training established a solid foundation for large-scale application development and efficient problem-solving.</p>
+                <button class="cert-btn cert-btn-view" style="margin-top: 1rem; width: auto;" onclick="openCert('CSE Pathshala Certificate.pdf','CSE Pathshala Certificate','pdf')"><i class="fas fa-eye"></i> View Certificate</button>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- ════════════ SKILLS ════════════ -->
 <section id="skills">
     <div class="sec-header">
@@ -690,10 +733,17 @@
             </div>
         </div>
         <div class="skill-category" data-aos="fade-up" data-aos-delay="400">
-            <div class="skill-cat-icon"><i class="fas fa-microchip"></i></div>
-            <div class="skill-cat-title">Core</div>
+            <div class="skill-cat-icon"><i class="fas fa-terminal"></i></div>
+            <div class="skill-cat-title">Programming Skills</div>
             <div class="tech-tags">
-                <span class="tech-tag">Data Structures & Algorithms</span><span class="tech-tag">Problem Solving</span>
+                <span class="tech-tag">C</span><span class="tech-tag">C++</span><span class="tech-tag">Java</span><span class="tech-tag">Python</span>
+            </div>
+        </div>
+        <div class="skill-category" data-aos="fade-up" data-aos-delay="500">
+            <div class="skill-cat-icon"><i class="fas fa-user-friends"></i></div>
+            <div class="skill-cat-title">Soft Skills</div>
+            <div class="tech-tags">
+                <span class="tech-tag">Communication</span><span class="tech-tag">Problem Solving</span><span class="tech-tag">Teamwork</span><span class="tech-tag">Adaptability</span>
             </div>
         </div>
     </div>
@@ -917,20 +967,6 @@
                 <button class="cert-btn cert-btn-view" onclick="openCert('GFG AI Tools certificate.pdf','AI Tools — GeeksforGeeks','pdf')"><i class="fas fa-eye"></i> View</button>
             </div>
         </div>
-        <!-- CSE Pathshala -->
-        <div class="cert-card" data-aos="fade-up" data-aos-delay="300">
-            <div class="cert-card-top">
-                <div class="cert-icon"><i class="fas fa-laptop-code"></i></div>
-                <div class="cert-info">
-                    <h3>CSE Pathshala Certificate</h3>
-                    <div class="cert-issuer">CSE Pathshala</div>
-                    <div class="cert-date">&#128197; 2024</div>
-                </div>
-            </div>
-            <div class="cert-actions">
-                <button class="cert-btn cert-btn-view" onclick="openCert('CSE Pathshala Certificate.pdf','CSE Pathshala Certificate','pdf')"><i class="fas fa-eye"></i> View</button>
-            </div>
-        </div>
         <!-- Cloud Computing -->
         <div class="cert-card" data-aos="fade-up" data-aos-delay="400">
             <div class="cert-card-top">
@@ -1071,6 +1107,8 @@
     <div class="footer-logo"><span>T</span>anu<span>.</span></div>
     <p>Made with <span class="heart">❤️</span> by Tanu &nbsp;|&nbsp; &copy; 2026 All Rights Reserved</p>
 </footer>
+
+<button id="scrollToTop" title="Go to top"><i class="fas fa-chevron-up"></i></button>
 
 <script>
     // Lightweight Intersection Observer for scroll animations
@@ -1251,6 +1289,19 @@
         document.getElementById('certModalBody').innerHTML = '';
         document.body.style.overflow = '';
     }
+
+    // Scroll Top functionality
+    const scrollBtn = document.getElementById('scrollToTop');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) {
+            scrollBtn.classList.add('show');
+        } else {
+            scrollBtn.classList.remove('show');
+        }
+    });
+    scrollBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
