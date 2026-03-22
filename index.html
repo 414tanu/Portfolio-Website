@@ -117,22 +117,91 @@
         .stat-item { text-align: center; }
         .stat-num { font-size: 2rem; font-weight: 800; color: var(--orange); line-height: 1; }
         .stat-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
-        .hero-image { flex-shrink: 0; position: relative; }
-        .hero-img-wrap {
-            width: 320px; height: 380px; position: relative;
-            background: linear-gradient(135deg, rgba(249,115,22,0.15), rgba(249,115,22,0.05));
-            border-radius: 30px; border: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        .hero-image {
+            position: relative;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
         }
-        .hero-img-wrap::before { content: ''; position: absolute; inset: -2px; border-radius: 32px; background: linear-gradient(135deg, var(--orange), transparent 60%); z-index: -1; }
-        .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; border-radius: 28px; filter: grayscale(20%); transition: filter 0.5s; }
-        .hero-img-wrap:hover img { filter: grayscale(0%); }
-        .hero-badge { position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); background: var(--orange); color: var(--white); padding: 0.5rem 1.5rem; border-radius: 50px; font-size: 0.85rem; font-weight: 700; white-space: nowrap; box-shadow: 0 0 20px var(--orange-glow); }
-        .floating-dot { position: absolute; border-radius: 50%; background: var(--orange); opacity: 0.6; animation: float 3s ease-in-out infinite; }
+
+        .hero-img-wrap {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            padding: 6px;
+            background: linear-gradient(135deg, #f97316, #ffb347);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: float 4s ease-in-out infinite;
+            box-shadow: 0 0 40px rgba(249, 115, 22, 0.3);
+            z-index: 2;
+        }
+
+        .hero-img-wrap img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #0d0d0d;
+            transition: transform 0.4s ease;
+        }
+
+        .hero-img-wrap:hover img {
+            transform: scale(1.08);
+        }
+
+        .hero-img-wrap::before {
+            content: "";
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(249,115,22,0.25), transparent 70%);
+            z-index: -1;
+            animation: pulseGlow 3s infinite ease-in-out;
+        }
+
+        .hero-image::after {
+            content: "";
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(249,115,22,0.15), transparent 70%);
+            filter: blur(40px);
+            z-index: -2;
+        }
+
+        .hero-img-wrap::after {
+            content: "";
+            position: absolute;
+            width: 310px;
+            height: 310px;
+            border-radius: 50%;
+            border: 2px dashed rgba(249,115,22,0.4);
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(0.9); opacity: 0.6; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.6; }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-badge { position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); background: var(--orange); color: var(--white); padding: 0.5rem 1.5rem; border-radius: 50px; font-size: 0.85rem; font-weight: 700; white-space: nowrap; box-shadow: 0 0 20px var(--orange-glow); z-index: 3;}
+        .floating-dot { position: absolute; border-radius: 50%; background: var(--orange); opacity: 0.6; animation: float 3s ease-in-out infinite; z-index: 0; }
         .floating-dot:nth-child(1) { width: 12px; height: 12px; top: 20px; right: -20px; animation-delay: 0s; }
         .floating-dot:nth-child(2) { width: 8px; height: 8px; bottom: 60px; right: -30px; animation-delay: 1s; }
         .floating-dot:nth-child(3) { width: 6px; height: 6px; top: 80px; left: -20px; animation-delay: 2s; }
-        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-12px); } 100% { transform: translateY(0px); } }
 
         /* ── SECTIONS COMMON ── */
         section { padding: 90px 5%; }
@@ -435,21 +504,7 @@
             100% { transform: scale(1.06); filter: brightness(1.05); }
         }
         
-        .profile-img {
-            width: 320px;
-            height: 320px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--orange);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3), 0 0 25px rgba(249, 115, 22, 0.4);
-            transition: transform 0.3s ease;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-        .profile-img:hover {
-            transform: scale(1.04);
-        }
+
     </style>
 </head>
 <body>
@@ -500,8 +555,8 @@
             <div class="floating-dot"></div>
             <div class="floating-dot"></div>
             <div class="floating-dot"></div>
-            <div class="hero-img-wrap" style="width: auto; height: auto; border: none; box-shadow: none; background: transparent; overflow: visible;">
-                <img src="profile_clean.png" alt="Tanu - Developer" class="profile-img" style="animation: cinematicZoom 10s infinite alternate ease-in-out;">
+            <div class="hero-img-wrap">
+                <img src="profile_clean.png" alt="Tanu - Developer">
             </div>
             <div class="hero-badge">🟢 Open to Work</div>
         </div>
@@ -516,13 +571,15 @@
         <div class="sec-line"></div>
     </div>
     <div class="about-grid">
-        <div class="about-imgs" data-aos="fade-right">
-            <div class="about-img-main" style="border: none; box-shadow: none; background: transparent; overflow: visible;">
-                <img src="profile_clean.png" class="profile-img" alt="Tanu About" style="width: 260px; height: 260px; margin-bottom: 2rem;">
-            </div>
-            <div class="about-exp-badge">
-                <div class="num">LPU</div>
-                <div class="txt">B.Tech<br>CSE</div>
+        <div class="about-imgs" data-aos="fade-right" style="display: flex; justify-content: center; align-items: center;">
+            <div style="position: relative; display: inline-block;">
+                <div class="hero-img-wrap" style="animation: none;">
+                    <img src="profile_clean.png" alt="Tanu About">
+                </div>
+                <div class="about-exp-badge" style="z-index: 5; bottom: -5px; right: -15px;">
+                    <div class="num">LPU</div>
+                    <div class="txt">B.Tech<br>CSE</div>
+                </div>
             </div>
         </div>
         <div class="about-text" data-aos="fade-left">
