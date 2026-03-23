@@ -44,10 +44,132 @@
             --white: #ffffff;
         }
         html { scroll-behavior: smooth; }
-        body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
-        body, section, section * { cursor: url('profile_new.png') 4 4, auto; }
+        body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; position: relative; }
+        body, section, section * { cursor: none; }
         a, button, .overlay-btn, .proj-link-btn, .social-link, .cert-btn, .cert-modal-close, .cert-modal-rotate, #scrollToTop {
-            cursor: url('profile_new.png') 4 4, pointer;
+            cursor: none;
+        }
+        section, nav, footer { position: relative; z-index: 1; }
+
+        /* GLOBAL 3D BACKGROUND */
+        #global3d-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            pointer-events: none;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 50% 45%, rgba(249,115,22,0.16), transparent 48%),
+                radial-gradient(circle at 20% 80%, rgba(255,255,255,0.05), transparent 40%),
+                #0b0b0b;
+        }
+        .bg-stars,
+        .bg-stars-soft {
+            position: absolute;
+            inset: -20%;
+            background-image:
+                radial-gradient(circle, rgba(255,255,255,0.72) 1px, transparent 1.4px),
+                radial-gradient(circle, rgba(249,168,89,0.35) 1px, transparent 1.6px);
+            background-size: 120px 120px, 180px 180px;
+            animation: driftStars 50s linear infinite;
+        }
+        .bg-stars-soft {
+            opacity: 0.55;
+            filter: blur(0.4px);
+            transform: scale(1.15);
+            animation-duration: 85s;
+            animation-direction: reverse;
+        }
+        .bg-vignette {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, transparent 35%, rgba(4,4,4,0.74) 100%);
+        }
+        .bg-orbit {
+            position: absolute;
+            left: 50%;
+            top: 52%;
+            width: min(70vw, 760px);
+            height: min(70vw, 760px);
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 1px solid rgba(249,115,22,0.2);
+            box-shadow: inset 0 0 80px rgba(249,115,22,0.12);
+            animation: orbitPulse 8s ease-in-out infinite;
+        }
+        .bg-node {
+            position: absolute;
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            border: 1px solid rgba(249,115,22,0.35);
+            background: rgba(22,22,22,0.82);
+            color: #ffb068;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.35), inset 0 0 20px rgba(249,115,22,0.16);
+            animation: nodeFloat 6s ease-in-out infinite;
+        }
+        .bg-node.n1 { top: 11%; left: 21%; }
+        .bg-node.n2 { top: 16%; right: 20%; animation-delay: 0.7s; }
+        .bg-node.n3 { top: 42%; right: 13%; animation-delay: 1.4s; }
+        .bg-node.n4 { bottom: 22%; right: 26%; animation-delay: 0.4s; }
+        .bg-node.n5 { bottom: 12%; left: 26%; animation-delay: 1.1s; }
+        .bg-node.n6 { top: 37%; left: 14%; animation-delay: 1.8s; }
+        @keyframes driftStars {
+            from { transform: translate3d(0, 0, 0); }
+            to { transform: translate3d(-120px, -160px, 0); }
+        }
+        @keyframes orbitPulse {
+            0%,100% { transform: translate(-50%, -50%) scale(1); opacity: 0.45; }
+            50% { transform: translate(-50%, -50%) scale(1.04); opacity: 0.75; }
+        }
+        @keyframes nodeFloat {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* CURSOR RING */
+        #cursor-ring,
+        #cursor-dot {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        #cursor-ring {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid rgba(249,115,22,0.85);
+            box-shadow: 0 0 0 6px rgba(249,115,22,0.12);
+            transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, opacity 0.2s ease;
+        }
+        #cursor-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ff9e4a;
+            box-shadow: 0 0 12px rgba(249,115,22,0.7);
+        }
+        body.cursor-active #cursor-ring,
+        body.cursor-active #cursor-dot { opacity: 1; }
+        body.cursor-hovering #cursor-ring {
+            width: 42px;
+            height: 42px;
+            border-color: rgba(255,176,104,0.95);
+            box-shadow: 0 0 0 8px rgba(249,115,22,0.2);
+        }
+        @media (max-width: 900px), (hover: none), (pointer: coarse) {
+            #cursor-ring, #cursor-dot { display: none; }
+            body, section, section * { cursor: auto; }
+            a, button, .overlay-btn, .proj-link-btn, .social-link, .cert-btn, .cert-modal-close, .cert-modal-rotate, #scrollToTop { cursor: pointer; }
         }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
@@ -275,8 +397,28 @@
         .skill-bar-bg { height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
         .skill-bar-fill { height: 100%; background: linear-gradient(90deg, var(--orange-dark), var(--orange-light)); border-radius: 3px; transition: width 1.5s ease; }
         .tech-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
-        .tech-tag { background: rgba(249,115,22,0.08); border: 1px solid var(--border); color: var(--text-muted); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.78rem; font-weight: 500; transition: all 0.3s; }
+        .tech-tag { background: rgba(249,115,22,0.08); border: 1px solid var(--border); color: var(--text-muted); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.78rem; font-weight: 500; transition: all 0.3s; display: inline-flex; align-items: center; gap: 0.4rem; }
+        .tech-tag i { color: #89b8ff; font-size: 0.82rem; }
         .tech-tag:hover { background: rgba(249,115,22,0.15); color: var(--orange); border-color: var(--orange); }
+
+        /* MULTI-SECTION 3D HOVER */
+        .card-3d {
+            transform-style: preserve-3d;
+            will-change: transform;
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .card-3d::after {
+            content: "";
+            position: absolute;
+            inset: -120% -40%;
+            background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.12) 50%, transparent 60%);
+            transform: translateX(-120%);
+            pointer-events: none;
+            transition: transform 0.5s ease;
+        }
+        .card-3d:hover::after { transform: translateX(120%); }
 
         /* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ PROJECTS ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
         [data-aos] { opacity: 0; transform: translateY(40px) scale(0.95) rotateX(-10deg); transition: all 1s cubic-bezier(0.22, 1, 0.36, 1); will-change: transform, opacity; }
@@ -618,12 +760,31 @@
         #scrollToTop:active { cursor: grabbing; }
         #scrollToTop:hover i { transform: rotate(-10deg) translateY(-2px); }
 
+        /* Force custom ring cursor on desktop */
+        @media (hover: hover) and (pointer: fine) {
+            body, body * { cursor: none !important; }
+        }
+
     </style>
 </head>
 <body>
 <div id="siteLoader" aria-hidden="true">
     <div class="loader-brand">Tanu<span>.</span></div>
 </div>
+<div id="global3d-bg" aria-hidden="true">
+    <div class="bg-stars"></div>
+    <div class="bg-stars-soft"></div>
+    <div class="bg-orbit"></div>
+    <div class="bg-node n1"><i class="fab fa-js"></i></div>
+    <div class="bg-node n2"><i class="fab fa-react"></i></div>
+    <div class="bg-node n3"><i class="fab fa-node-js"></i></div>
+    <div class="bg-node n4"><i class="fas fa-database"></i></div>
+    <div class="bg-node n5"><i class="fab fa-github"></i></div>
+    <div class="bg-node n6"><i class="fab fa-css3-alt"></i></div>
+    <div class="bg-vignette"></div>
+</div>
+<div id="cursor-ring" aria-hidden="true"></div>
+<div id="cursor-dot" aria-hidden="true"></div>
 
 <!-- ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â NAV ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â -->
 <nav id="navbar">
@@ -736,42 +897,42 @@
             <div class="skill-cat-icon"><i class="fas fa-code"></i></div>
             <div class="skill-cat-title">Frontend</div>
             <div class="tech-tags">
-                <span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span class="tech-tag">JavaScript</span><span class="tech-tag">React</span><span class="tech-tag">Responsive Design</span>
+                <span class="tech-tag"><i class="fab fa-html5"></i>HTML</span><span class="tech-tag"><i class="fab fa-css3-alt"></i>CSS</span><span class="tech-tag"><i class="fab fa-js"></i>JavaScript</span><span class="tech-tag"><i class="fab fa-react"></i>React</span><span class="tech-tag"><i class="fas fa-mobile-alt"></i>Responsive Design</span>
             </div>
         </div>
         <div class="skill-category" data-aos="fade-up" data-aos-delay="350">
             <div class="skill-cat-icon"><i class="fas fa-server"></i></div>
             <div class="skill-cat-title">Backend</div>
             <div class="tech-tags">
-                <span class="tech-tag">Node.js</span><span class="tech-tag">Express</span>
+                <span class="tech-tag"><i class="fab fa-node-js"></i>Node.js</span><span class="tech-tag"><i class="fas fa-network-wired"></i>Express</span>
             </div>
         </div>
         <div class="skill-category" data-aos="fade-up" data-aos-delay="500">
             <div class="skill-cat-icon"><i class="fas fa-database"></i></div>
             <div class="skill-cat-title">Database</div>
             <div class="tech-tags">
-                <span class="tech-tag">MongoDB</span>
+                <span class="tech-tag"><i class="fas fa-leaf"></i>MongoDB</span>
             </div>
         </div>
         <div class="skill-category" data-aos="fade-up" data-aos-delay="650">
             <div class="skill-cat-icon"><i class="fas fa-tools"></i></div>
             <div class="skill-cat-title">Tools</div>
             <div class="tech-tags">
-                <span class="tech-tag">Git</span><span class="tech-tag">GitHub</span><span class="tech-tag">VS Code</span>
+                <span class="tech-tag"><i class="fab fa-git-alt"></i>Git</span><span class="tech-tag"><i class="fab fa-github"></i>GitHub</span><span class="tech-tag"><i class="fas fa-code"></i>VS Code</span>
             </div>
         </div>
         <div class="skill-category" data-aos="fade-up" data-aos-delay="800">
             <div class="skill-cat-icon"><i class="fas fa-terminal"></i></div>
             <div class="skill-cat-title">Programming Skills</div>
             <div class="tech-tags">
-                <span class="tech-tag">C</span><span class="tech-tag">C++</span><span class="tech-tag">Java</span><span class="tech-tag">Python</span>
+                <span class="tech-tag"><i class="fas fa-terminal"></i>C</span><span class="tech-tag"><i class="fas fa-code"></i>C++</span><span class="tech-tag"><i class="fab fa-java"></i>Java</span><span class="tech-tag"><i class="fab fa-python"></i>Python</span>
             </div>
         </div>
         <div class="skill-category" data-aos="fade-up" data-aos-delay="500">
             <div class="skill-cat-icon"><i class="fas fa-user-friends"></i></div>
             <div class="skill-cat-title">Soft Skills</div>
             <div class="tech-tags">
-                <span class="tech-tag">Communication</span><span class="tech-tag">Problem Solving</span><span class="tech-tag">Teamwork</span><span class="tech-tag">Adaptability</span>
+                <span class="tech-tag"><i class="fas fa-comments"></i>Communication</span><span class="tech-tag"><i class="fas fa-lightbulb"></i>Problem Solving</span><span class="tech-tag"><i class="fas fa-users"></i>Teamwork</span><span class="tech-tag"><i class="fas fa-sync-alt"></i>Adaptability</span>
             </div>
         </div>
     </div>
@@ -1344,10 +1505,53 @@
     }, { threshold: 0.35 });
     counters.forEach((counter) => counterObserver.observe(counter));
 
-    // Lightweight tilt effect (desktop only)
-    const canTilt = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    if (canTilt) {
-        const tiltItems = document.querySelectorAll('.project-card, .edu-card, .train-card');
+    // Premium cursor ring + global parallax + multi-section 3D hover
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const cursorRing = document.getElementById('cursor-ring');
+    const cursorDot = document.getElementById('cursor-dot');
+    const bg3d = document.getElementById('global3d-bg');
+    if (finePointer && cursorRing && cursorDot) {
+        let mx = window.innerWidth / 2;
+        let my = window.innerHeight / 2;
+        let rx = mx;
+        let ry = my;
+        let dx = mx;
+        let dy = my;
+
+        const tick = () => {
+            rx += (mx - rx) * 0.18;
+            ry += (my - ry) * 0.18;
+            dx += (mx - dx) * 0.3;
+            dy += (my - dy) * 0.3;
+            cursorRing.style.left = `${rx}px`;
+            cursorRing.style.top = `${ry}px`;
+            cursorDot.style.left = `${dx}px`;
+            cursorDot.style.top = `${dy}px`;
+            requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+
+        window.addEventListener('mousemove', (e) => {
+            mx = e.clientX;
+            my = e.clientY;
+            document.body.classList.add('cursor-active');
+            if (bg3d) {
+                const px = ((e.clientX / window.innerWidth) - 0.5) * 14;
+                const py = ((e.clientY / window.innerHeight) - 0.5) * 14;
+                bg3d.style.transform = `translate3d(${px}px, ${py}px, 0)`;
+            }
+        });
+
+        const hoverables = document.querySelectorAll('a, button, .proj-link-btn, .overlay-btn, .social-link, .tech-tag, .chip');
+        hoverables.forEach((el) => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hovering'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hovering'));
+        });
+    }
+
+    if (finePointer) {
+        const tiltItems = document.querySelectorAll('.project-card, .edu-card, .train-card, .skill-category, .cert-card, .ach-card, .proof-card, .contact-form');
+        tiltItems.forEach((item) => item.classList.add('card-3d'));
         tiltItems.forEach((item) => {
             let frame = null;
             item.addEventListener('mousemove', (e) => {
@@ -1358,16 +1562,16 @@
                     const y = e.clientY - rect.top;
                     const centerX = rect.width / 2;
                     const centerY = rect.height / 2;
-                    const rotateX = ((y - centerY) / centerY) * -5;
-                    const rotateY = ((x - centerX) / centerX) * 5;
+                    const rotateX = ((y - centerY) / centerY) * -4.8;
+                    const rotateY = ((x - centerX) / centerX) * 4.8;
                     item.style.transition = 'none';
-                    item.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                    item.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
                     frame = null;
                 });
             });
             item.addEventListener('mouseleave', () => {
-                item.style.transition = 'transform 0.45s ease';
-                item.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
+                item.style.transition = 'transform 0.45s ease, box-shadow 0.45s ease';
+                item.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0)';
             });
         });
     }
