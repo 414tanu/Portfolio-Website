@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <style>
         /* Custom Lightweight Fade-up Observer */
         [data-aos] {
@@ -44,11 +45,15 @@
         }
         html { scroll-behavior: smooth; }
         body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+        body, section, section * { cursor: url('profile_new.png') 4 4, auto; }
+        a, button, .overlay-btn, .proj-link-btn, .social-link, .cert-btn, .cert-modal-close, .cert-modal-rotate, #scrollToTop {
+            cursor: url('profile_new.png') 4 4, pointer;
+        }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
         ::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 3px; }
 
-        /* ── NAV ── */
+        /* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ NAV ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
         nav {
             position: fixed; top: 0; width: 100%; z-index: 1000;
             background: rgba(13,13,13,0.85);
@@ -75,7 +80,7 @@
         .nav-btn:hover { background-position: 100% 0; transform: translateY(-2px) scale(1.03); }
         .menu-toggle { display: none; font-size: 1.5rem; color: var(--white); cursor: pointer; background: none; border: none; }
 
-        /* ── HERO ── */
+        /* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ HERO ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
         #home {
             min-height: 100vh; display: flex; align-items: center;
             padding: 100px 5% 60px;
@@ -203,7 +208,7 @@
         .floating-dot:nth-child(3) { width: 6px; height: 6px; top: 80px; left: -20px; animation-delay: 2s; }
         @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-12px); } 100% { transform: translateY(0px); } }
 
-        /* ── SECTIONS COMMON ── */
+        /* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ SECTIONS COMMON ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
         section { padding: 90px 5%; }
         .section-alt { background: var(--bg2); }
         .sec-header { text-align: center; margin-bottom: 60px; }
@@ -213,9 +218,36 @@
         .sec-line { width: 60px; height: 3px; background: var(--orange); margin: 0 auto 1rem; border-radius: 2px; }
         .sec-desc { color: var(--text-muted); font-size: 1rem; max-width: 550px; margin: 0 auto; line-height: 1.7; }
 
-        /* ── ABOUT ── */
+        /* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ ABOUT ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
         .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-        .about-imgs { position: relative; }
+        .about-imgs { position: relative; overflow: hidden; border-radius: 24px; padding: 1rem; }
+        .about-bg-orb {
+            position: absolute;
+            inset: -10%;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(249,115,22,0.20), transparent 45%),
+                radial-gradient(circle at 80% 70%, rgba(249,115,22,0.12), transparent 50%);
+            filter: blur(28px);
+            animation: lightLeaks 10s ease-in-out infinite alternate;
+        }
+        .about-bg-grid {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(249,115,22,0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(249,115,22,0.06) 1px, transparent 1px);
+            background-size: 52px 52px;
+            animation: aboutGridMove 16s linear infinite;
+        }
+        .about-imgs > *:not(.about-bg-orb):not(.about-bg-grid) { position: relative; z-index: 1; }
+        @keyframes aboutGridMove {
+            from { transform: translate3d(0, 0, 0); }
+            to { transform: translate3d(-26px, -26px, 0); }
+        }
         .about-img-main { width: 100%; border-radius: 20px; overflow: hidden; border: 1px solid var(--border); }
         .about-img-main img { width: 100%; height: 380px; object-fit: cover; }
         .about-exp-badge { position: absolute; bottom: -20px; right: -20px; background: var(--orange); color: var(--white); border-radius: 16px; padding: 1rem 1.5rem; text-align: center; box-shadow: 0 0 25px var(--orange-glow); }
@@ -230,7 +262,7 @@
         .about-info-item .label { color: var(--text-muted); font-size: 0.88rem; min-width: 90px; font-weight: 500; }
         .about-info-item .val { color: var(--white); font-size: 0.88rem; font-weight: 500; }
 
-        /* ── SKILLS ── */
+        /* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ SKILLS ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
         .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
         .skill-category { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; transition: all 0.3s; }
         .skill-category:hover { border-color: var(--orange); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(249,115,22,0.1); }
@@ -246,14 +278,24 @@
         .tech-tag { background: rgba(249,115,22,0.08); border: 1px solid var(--border); color: var(--text-muted); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.78rem; font-weight: 500; transition: all 0.3s; }
         .tech-tag:hover { background: rgba(249,115,22,0.15); color: var(--orange); border-color: var(--orange); }
 
-        /* ── PROJECTS ── */
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; perspective: 1000px; }
-        .project-card { background: rgba(26,26,26,0.6); backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s, box-shadow 0.3s; transform-style: preserve-3d; will-change: transform; }
+        /* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ PROJECTS ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
+        [data-aos] { opacity: 0; transform: translateY(40px) scale(0.95) rotateX(-10deg); transition: all 1s cubic-bezier(0.22, 1, 0.36, 1); will-change: transform, opacity; }
+        [data-aos].aos-animate { opacity: 1; transform: translateY(0) scale(1) rotateX(0); }
+        [data-aos="fade-right"] { transform: translateX(-40px) rotateY(-10deg); }
+        [data-aos="fade-left"] { transform: translateX(40px) rotateY(10deg); }
+        
+        /* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ PROJECTS ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.2rem; perspective: 1200px; }
+        .project-card { 
+            background: rgba(26,26,26,0.6); backdrop-filter: blur(12px); border: 1px solid var(--border); 
+            border-radius: 20px; overflow: hidden; transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); 
+            transform-style: preserve-3d; will-change: transform; position: relative;
+        }
         .project-card:hover { border-color: var(--orange); box-shadow: 0 20px 40px rgba(249,115,22,0.12); z-index: 10; }
-        .project-img { position: relative; height: 220px; overflow: hidden; }
-        .project-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s, filter 0.5s; filter: blur(3px); }
-        .project-card:hover .project-img img { transform: scale(1.08); filter: blur(0); }
-        .project-img-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.6); opacity: 0; transition: opacity 0.3s; display: flex; align-items: center; justify-content: center; gap: 1rem; }
+        .project-img { position: relative; height: 220px; overflow: hidden; background: #000; }
+        .project-img img, .project-img video { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s, filter 0.5s; filter: brightness(0.8); }
+        .project-card:hover .project-img img, .project-card:hover .project-img video { transform: scale(1.08); filter: brightness(1); }
+        .project-img-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.6); opacity: 0; transition: opacity 0.3s; display: flex; align-items: center; justify-content: center; gap: 1rem; z-index: 5; }
         .project-card:hover .project-img-overlay { opacity: 1; }
         .overlay-btn { width: 42px; height: 42px; border-radius: 50%; background: var(--orange); display: flex; align-items: center; justify-content: center; color: var(--white); text-decoration: none; font-size: 1rem; transition: all 0.3s; }
         .overlay-btn:hover { background: var(--orange-dark); transform: scale(1.1); }
@@ -350,7 +392,7 @@
             50% { opacity: 1; transform: scale(1.03); }
         }
 
-        /* ── CERTIFICATES ── */
+        /* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ CERTIFICATES ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
         .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
         .cert-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 1.8rem; display: flex; flex-direction: column; gap: 0; transition: all 0.3s; }
         .cert-card:hover { border-color: var(--orange); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(249,115,22,0.1); }
@@ -367,23 +409,27 @@
         .cert-btn-dl { background: transparent; color: var(--text-muted); border: 1px solid rgba(255,255,255,0.08); }
         .cert-btn-dl:hover { background: rgba(255,255,255,0.06); color: var(--white); border-color: rgba(255,255,255,0.2); }
 
-        /* ── CERT MODAL ── */
+        /* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ CERT MODAL ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
         .cert-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 1rem; backdrop-filter: blur(8px); }
         .cert-modal-overlay.active { display: flex; }
         .cert-modal { background: var(--card); border: 1px solid var(--border); border-radius: 24px; width: 100%; max-width: 900px; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.6); }
         .cert-modal-header { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--border); }
         .cert-modal-title { color: var(--white); font-size: 1rem; font-weight: 700; }
-        .cert-modal-actions { display: flex; gap: 0.6rem; align-items: center; }
+        .cert-modal-actions { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; }
         .cert-modal-close { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
         .cert-modal-close:hover { background: rgba(249,115,22,0.2); color: var(--orange); border-color: var(--orange); }
         .cert-modal-dl { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--orange); color: var(--white); padding: 0.45rem 1rem; border-radius: 50px; font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: all 0.3s; }
         .cert-modal-dl:hover { background: var(--orange-dark); }
+        .cert-modal-open { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(255,255,255,0.08); color: var(--white); border: 1px solid rgba(255,255,255,0.15); padding: 0.45rem 1rem; border-radius: 50px; font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: all 0.3s; }
+        .cert-modal-open:hover { border-color: var(--orange); color: var(--orange); }
+        .cert-modal-rotate { display: inline-flex; align-items: center; gap: 0.4rem; background: transparent; color: var(--text-muted); border: 1px solid rgba(255,255,255,0.12); padding: 0.45rem 0.9rem; border-radius: 50px; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .cert-modal-rotate:hover { border-color: var(--orange); color: var(--orange); }
         .cert-modal-body { flex: 1; overflow: auto; padding: 1rem; display: flex; align-items: center; justify-content: center; background: var(--bg); }
         .cert-modal-body iframe { width: 100%; height: 70vh; border: none; border-radius: 12px; }
         .cert-modal-body img { max-width: 100%; max-height: 70vh; border-radius: 12px; object-fit: contain; transition: transform 0.3s; }
         .cert-modal-body img.rotated { max-width: 70vh; max-height: 100%; }
 
-        /* ── ACHIEVEMENTS ── */
+        /* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ ACHIEVEMENTS ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
         .achievements-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
         .ach-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; text-align: center; transition: all 0.3s; position: relative; overflow: hidden; }
         .ach-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--orange-dark), var(--orange-light)); }
@@ -396,19 +442,19 @@
         .ach-stats-mini span { color: var(--text-muted); font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 0.3rem; }
         .ach-stats-mini i { color: var(--orange); }
         .ach-badge-grid { display: flex; justify-content: center; gap: 1rem; margin-top: 1.2rem; }
-        .ach-badge-grid img { width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); transition: transform 0.3s; cursor: pointer; }
-        .ach-badge-grid img:hover { transform: scale(1.1) rotate(5deg); }
+        .ach-badge-grid img { width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; cursor: pointer; border: 1px solid transparent; border-radius: 14px; padding: 0.3rem; background: rgba(255,255,255,0.02); }
+        .ach-badge-grid img:hover { transform: translateY(-6px) scale(1.04); border-color: var(--orange); box-shadow: 0 10px 20px rgba(249,115,22,0.2); }
         .ach-image-previews { display: flex; justify-content: center; gap: 0.8rem; margin-top: 1.2rem; }
         .ach-preview-img { width: 100px; height: 75px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); cursor: pointer; transition: all 0.3s; }
-        .ach-preview-img:hover { border-color: var(--orange); transform: scale(1.1) rotate(5deg); box-shadow: 0 5px 15px rgba(249,115,22,0.2); z-index: 10; position: relative; }
+        .ach-preview-img:hover { border-color: var(--orange); transform: translateY(-5px) scale(1.05); box-shadow: 0 8px 18px rgba(249,115,22,0.2); z-index: 10; position: relative; }
         .ach-footer { margin-top: 1.5rem; }
-        .ach-link { color: var(--orange); text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: color 0.3s; }
-        .ach-link:hover { color: var(--orange-light); text-decoration: underline; }
+        .ach-link { color: var(--orange); text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: all 0.3s; display: inline-flex; align-items: center; gap: 0.4rem; border: 1px solid var(--border); padding: 0.45rem 0.9rem; border-radius: 999px; background: rgba(249,115,22,0.06); }
+        .ach-link:hover { color: var(--white); border-color: var(--orange); background: var(--orange); text-decoration: none; transform: translateY(-2px); }
         
-        /* ── EDUCATION ── */
-        .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
-        .edu-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; transition: all 0.3s; position: relative; overflow: hidden; display: flex; gap: 1.5rem; align-items: flex-start; }
-        .edu-card:hover { border-color: var(--orange); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(249,115,22,0.1); }
+        /* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ EDUCATION ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
+        .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; perspective: 1000px; }
+        .edu-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); position: relative; overflow: hidden; display: flex; gap: 1.5rem; align-items: flex-start; transform-style: preserve-3d; }
+        .edu-card:hover { border-color: var(--orange); box-shadow: 0 15px 35px rgba(249,115,22,0.1); }
         .edu-icon { width: 60px; height: 60px; background: rgba(249,115,22,0.1); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: var(--orange); font-size: 1.6rem; flex-shrink: 0; }
         .edu-info h3 { font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem; }
         .edu-school { color: var(--orange); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.4rem; }
@@ -416,7 +462,7 @@
         .edu-details { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; }
         .edu-badge { display: inline-block; background: rgba(249,115,22,0.1); color: var(--orange); padding: 0.2rem 0.8rem; border-radius: 50px; font-size: 0.78rem; font-weight: 600; margin-top: 1rem; border: 1px solid var(--border); }
 
-        /* ── ABOUT CHIPS & BULLETS ── */
+        /* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ ABOUT CHIPS & BULLETS ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
         .about-chips { display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 1.5rem 0; }
         .chip { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--white); padding: 0.5rem 1.2rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; transition: all 0.3s; }
         .chip:hover { border-color: var(--orange); background: rgba(249,115,22,0.08); transform: translateY(-3px); }
@@ -427,7 +473,7 @@
         .about-item { display: flex; align-items: center; gap: 0.8rem; color: var(--text); font-size: 0.95rem; font-weight: 500; }
         .about-item span { color: var(--orange); font-size: 1.1rem; }
 
-        /* ── CONTACT ── */
+        /* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ CONTACT ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
         .contact-wrapper { display: grid; grid-template-columns: 1fr 1.5fr; gap: 3rem; align-items: start; }
         .contact-info h3 { font-size: 1.8rem; font-weight: 800; color: var(--white); margin-bottom: 0.5rem; }
         .contact-info h3 span { color: var(--orange); }
@@ -453,14 +499,50 @@
         .form-group input:focus, .form-group textarea:focus { border-color: var(--orange); background: rgba(249,115,22,0.05); }
         .form-group textarea { resize: vertical; min-height: 130px; }
 
-        /* ── FOOTER ── */
-        footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 2.5rem 5%; text-align: center; }
+        /* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ FOOTER ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
+        footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 2.5rem 5%; text-align: center; position: relative; overflow: hidden; }
+        footer::before {
+            content: "";
+            position: absolute;
+            inset: -35% -10%;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 15% 30%, rgba(249,115,22,0.16), transparent 42%),
+                radial-gradient(circle at 85% 70%, rgba(249,115,22,0.10), transparent 45%);
+            filter: blur(34px);
+            animation: footerGlow 9s ease-in-out infinite alternate;
+        }
+        footer::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -30%;
+            width: 28%;
+            height: 100%;
+            pointer-events: none;
+            background: linear-gradient(90deg, transparent, rgba(255,176,94,0.18), transparent);
+            transform: skewX(-18deg);
+            animation: footerSweep 8.5s linear infinite;
+        }
         .footer-logo { font-size: 1.5rem; font-weight: 800; color: var(--white); margin-bottom: 1rem; }
         .footer-logo span { color: var(--orange); }
-        footer p { color: var(--text-muted); font-size: 0.875rem; }
+        .footer-logo, footer p { position: relative; z-index: 1; }
+        footer p { color: var(--text-muted); font-size: 0.875rem; animation: footerTextPulse 4.5s ease-in-out infinite; }
         footer .heart { color: var(--orange); }
+        @keyframes footerGlow {
+            0% { opacity: 0.55; transform: translate(0, 0) scale(1); }
+            100% { opacity: 0.95; transform: translate(-2%, 3%) scale(1.08); }
+        }
+        @keyframes footerSweep {
+            from { left: -35%; }
+            to { left: 120%; }
+        }
+        @keyframes footerTextPulse {
+            0%, 100% { color: var(--text-muted); text-shadow: 0 0 0 rgba(249,115,22,0); }
+            50% { color: #ffd9ba; text-shadow: 0 0 14px rgba(249,115,22,0.25); }
+        }
 
-        /* ── RESPONSIVE ── */
+        /* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ RESPONSIVE ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
         @media (max-width: 900px) {
             .hero-content { flex-direction: column-reverse; text-align: center; gap: 2rem; }
             .hero-desc { margin: 0 auto 2rem; }
@@ -504,10 +586,10 @@
             100% { transform: scale(1.06); filter: brightness(1.05); }
         }
 
-        /* ── TRAINING ── */
-        .training-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
-        .train-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; display: flex; gap: 1.5rem; align-items: flex-start; transition: all 0.3s; }
-        .train-card:hover { border-color: var(--orange); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(249,115,22,0.1); }
+        /* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ TRAINING ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
+        .training-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; perspective: 1000px; }
+        .train-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; display: flex; gap: 1.5rem; align-items: flex-start; transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); transform-style: preserve-3d; }
+        .train-card:hover { border-color: var(--orange); box-shadow: 0 15px 35px rgba(249,115,22,0.1); }
         .train-icon { width: 60px; height: 60px; background: rgba(249,115,22,0.1); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: var(--orange); font-size: 1.6rem; flex-shrink: 0; }
         .train-info h3 { font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem; }
         .train-org { color: var(--orange); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.4rem; }
@@ -517,13 +599,24 @@
         /* SCROLL TOP */
         #scrollToTop {
             position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
-            background: rgba(26,26,26,0.8); border: 1px solid var(--border); border-radius: 50%;
+            background: linear-gradient(135deg, rgba(249,115,22,0.12), rgba(249,115,22,0.28));
+            border: 1px solid rgba(249,115,22,0.45); border-radius: 16px;
             display: flex; align-items: center; justify-content: center; color: var(--white);
-            font-size: 1.2rem; cursor: pointer; transition: all 0.3s; z-index: 1000;
+            font-size: 1.15rem; cursor: grab; transition: all 0.3s; z-index: 1000;
             opacity: 0; visibility: hidden; backdrop-filter: blur(10px);
+            box-shadow: 0 8px 20px rgba(249,115,22,0.18);
         }
         #scrollToTop.show { opacity: 1; visibility: visible; }
-        #scrollToTop:hover { background: var(--orange); transform: translateY(-5px); box-shadow: 0 10px 25px var(--orange-glow); color: var(--white); border-color: var(--orange); }
+        #scrollToTop i { transition: transform 0.3s ease; }
+        #scrollToTop:hover {
+            background: linear-gradient(135deg, var(--orange), #ff9a3d);
+            transform: translateY(-6px) scale(1.04);
+            box-shadow: 0 12px 26px var(--orange-glow);
+            color: var(--white);
+            border-color: var(--orange);
+        }
+        #scrollToTop:active { cursor: grabbing; }
+        #scrollToTop:hover i { transform: rotate(-10deg) translateY(-2px); }
 
     </style>
 </head>
@@ -532,17 +625,17 @@
     <div class="loader-brand">Tanu<span>.</span></div>
 </div>
 
-<!-- ════════════ NAV ════════════ -->
+<!-- ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â NAV ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â -->
 <nav id="navbar">
     <div class="logo"><span>T</span>anu<span>.</span></div>
     <ul class="nav-links" id="navLinks">
         <li><a href="#home">Home</a></li>
         <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#training">Training</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#proof">Proof</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#proof">Proofs</a></li>
         <li><a href="#certificates">Certifications</a></li>
         <li><a href="#achievements">Achievements</a></li>
         <li><a href="#contact">Let's Connect</a></li>
@@ -551,14 +644,14 @@
     <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
 </nav>
 
-<!-- ════════════ HERO ════════════ -->
+<!-- ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â HERO ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â -->
 <section id="home">
     <div class="hero-bg"></div>
     <div id="particles-js"></div>
     <div class="hero-grid"></div>
     <div class="hero-content">
         <div class="hero-text" data-aos="fade-right">
-            <span class="hero-tag">🚀 SDE Aspirant</span>
+            <span class="hero-tag">🚀 SDE ASPIRANT</span>
             <h1>Hi, I'm <span class="name">Tanu</span><br><span id="typed-prefix"></span><span class="name" id="typed"></span></h1>
             <p class="hero-subtitle">I build responsive and user-friendly web applications using modern technologies. Focused on creating real-world projects and continuously improving my development and problem-solving skills.</p>
             <p class="hero-desc" style="font-weight:600; color:var(--white)">Open to Internships & Full-Time Opportunities</p>
@@ -567,7 +660,7 @@
                 <a href="TanuCVFinal (1).pdf" download="Tanu_CV.pdf" class="btn-outline"><i class="fas fa-download"></i> Download CV</a>
             </div>
             <div class="hero-stats">
-                <div class="stat-item"><div class="stat-num counter" data-target="5" data-suffix="+">0</div><div class="stat-label">Projects</div></div>
+                <div class="stat-item"><div class="stat-num counter" data-target="4" data-suffix="+">0</div><div class="stat-label">Projects</div></div>
                 <div class="stat-item"><div class="stat-num counter" data-target="100" data-suffix="+">0</div><div class="stat-label">DSA Solved</div></div>
                 <div class="stat-item"><div class="stat-num counter" data-target="3" data-suffix="+">0</div><div class="stat-label">Certifications</div></div>
             </div>
@@ -584,15 +677,17 @@
     </div>
 </section>
 
-<!-- ════════════ ABOUT ════════════ -->
+<!-- ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â ABOUT ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â -->
 <section id="about" class="section-alt">
-    <div class="sec-header">
+    <div class="sec-header" data-aos="fade-up">
         <span class="sec-tag">Who I Am</span>
         <h2 class="sec-title">About <span>Me</span></h2>
         <div class="sec-line"></div>
     </div>
     <div class="about-grid">
         <div class="about-imgs" data-aos="fade-right" style="display: flex; justify-content: center; align-items: center;">
+            <div class="about-bg-orb" aria-hidden="true"></div>
+            <div class="about-bg-grid" aria-hidden="true"></div>
             <div style="position: relative; display: inline-block;">
                 <div class="hero-img-wrap" style="animation: none;">
                     <img src="profile_clean.png" alt="Tanu About">
@@ -628,111 +723,44 @@
     </div>
 </section>
 
-<!-- ════════════ EDUCATION ════════════ -->
-<section id="education">
-    <div class="sec-header">
-        <span class="sec-tag">My Journey</span>
-        <h2 class="sec-title">Academic <span>Education</span></h2>
-        <div class="sec-line"></div>
-        <p class="sec-desc">My academic background and qualifications from various educational institutions.</p>
-    </div>
-    <div class="edu-grid">
-        <!-- University -->
-        <div class="edu-card" data-aos="zoom-in">
-            <div class="edu-icon"><i class="fas fa-university"></i></div>
-            <div class="edu-info">
-                <h3>B.Tech in Computer Science Engineering</h3>
-                <div class="edu-school">Lovely Professional University (LPU)</div>
-                <div class="edu-date"><i class="far fa-calendar-alt"></i> Expected Graduation: 2027</div>
-                <p class="edu-details">Currently focusing on Full Stack Development, Data Structures, and Algorithms to build professional-grade applications.</p>
-                <div class="edu-badge">CGPA: 6.6</div>
-            </div>
-        </div>
-        
-        <!-- 12th Grade -->
-        <div class="edu-card" data-aos="zoom-in" data-aos-delay="100">
-            <div class="edu-icon"><i class="fas fa-school"></i></div>
-            <div class="edu-info">
-                <h3>Senior Secondary Education (Class XII)</h3>
-                <div class="edu-school">C K S D Public School, Baghpat (CBSE)</div>
-                <div class="edu-date"><i class="far fa-calendar-alt"></i> 2021 - 2022</div>
-                <p class="edu-details">Focused on PCM (Physics, Chemistry, Mathematics) with a scored percentage of 83%.</p>
-            </div>
-        </div>
-
-        <!-- 10th Grade -->
-        <div class="edu-card" data-aos="zoom-in" data-aos-delay="200">
-            <div class="edu-icon"><i class="fas fa-graduation-cap"></i></div>
-            <div class="edu-info">
-                <h3>Secondary Education (Class X)</h3>
-                <div class="edu-school">C K S D Public School, Baghpat (CBSE)</div>
-                <div class="edu-date"><i class="far fa-calendar-alt"></i> 2019 - 2020</div>
-                <p class="edu-details">Completed with a focus on core subjects and a scored percentage of 73%.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ════════════ TRAINING ════════════ -->
-<section id="training" class="section-alt">
-    <div class="sec-header">
-        <span class="sec-tag">Vocational Training</span>
-        <h2 class="sec-title">My <span>Training</span></h2>
-        <div class="sec-line"></div>
-        <p class="sec-desc">Specialized training programs focusing on industrial skills and advanced development techniques.</p>
-    </div>
-    <div class="training-grid">
-        <div class="train-card" data-aos="fade-up">
-            <div class="train-icon"><i class="fas fa-laptop-code"></i></div>
-            <div class="train-info">
-                <h3>C++ Programming, OOPs & DSA</h3>
-                <div class="train-org">CSE Pathshala</div>
-                <div class="train-date"><i class="far fa-calendar-alt"></i> 1 Month Intensity Training</div>
-                <p class="train-details">Completed a comprehensive one-month training program focused on C++ Programming, Object-Oriented Programming (OOPs), and Data Structures and Algorithms (DSA). This training established a solid foundation for large-scale application development and efficient problem-solving.</p>
-                <button class="cert-btn cert-btn-view" style="margin-top: 1rem; width: auto;" onclick="openCert('CSE Pathshala Certificate.pdf','CSE Pathshala Certificate','pdf')"><i class="fas fa-eye"></i> View Certificate</button>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ════════════ SKILLS ════════════ -->
+<!-- ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â SKILLS ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â -->
 <section id="skills">
-    <div class="sec-header">
+    <div class="sec-header" data-aos="fade-up">
         <span class="sec-tag">My Expertise</span>
         <h2 class="sec-title">Skills & <span>Experience</span></h2>
         <div class="sec-line"></div>
         <p class="sec-desc">My technical expertise and professional journey through various technologies and domains.</p>
     </div>
     <div class="skills-grid">
-        <div class="skill-category" data-aos="fade-up">
+        <div class="skill-category" data-aos="fade-up" data-aos-delay="200">
             <div class="skill-cat-icon"><i class="fas fa-code"></i></div>
             <div class="skill-cat-title">Frontend</div>
             <div class="tech-tags">
                 <span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span class="tech-tag">JavaScript</span><span class="tech-tag">React</span><span class="tech-tag">Responsive Design</span>
             </div>
         </div>
-        <div class="skill-category" data-aos="fade-up" data-aos-delay="100">
+        <div class="skill-category" data-aos="fade-up" data-aos-delay="350">
             <div class="skill-cat-icon"><i class="fas fa-server"></i></div>
             <div class="skill-cat-title">Backend</div>
             <div class="tech-tags">
                 <span class="tech-tag">Node.js</span><span class="tech-tag">Express</span>
             </div>
         </div>
-        <div class="skill-category" data-aos="fade-up" data-aos-delay="200">
+        <div class="skill-category" data-aos="fade-up" data-aos-delay="500">
             <div class="skill-cat-icon"><i class="fas fa-database"></i></div>
             <div class="skill-cat-title">Database</div>
             <div class="tech-tags">
                 <span class="tech-tag">MongoDB</span>
             </div>
         </div>
-        <div class="skill-category" data-aos="fade-up" data-aos-delay="300">
+        <div class="skill-category" data-aos="fade-up" data-aos-delay="650">
             <div class="skill-cat-icon"><i class="fas fa-tools"></i></div>
             <div class="skill-cat-title">Tools</div>
             <div class="tech-tags">
                 <span class="tech-tag">Git</span><span class="tech-tag">GitHub</span><span class="tech-tag">VS Code</span>
             </div>
         </div>
-        <div class="skill-category" data-aos="fade-up" data-aos-delay="400">
+        <div class="skill-category" data-aos="fade-up" data-aos-delay="800">
             <div class="skill-cat-icon"><i class="fas fa-terminal"></i></div>
             <div class="skill-cat-title">Programming Skills</div>
             <div class="tech-tags">
@@ -754,51 +782,87 @@
     </div>
 </section>
 
-<!-- ════════════ PROJECTS ════════════ -->
-<section id="proof">
+<!-- ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â EDUCATION ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â -->
+<section id="education" class="section-alt">
     <div class="sec-header" data-aos="fade-up">
-        <span class="sec-tag">Why Me</span>
-        <h2 class="sec-title">Proof Of <span>Work</span></h2>
+        <span class="sec-tag">My Journey</span>
+        <h2 class="sec-title">Academic <span>Education</span></h2>
         <div class="sec-line"></div>
-        <p class="sec-desc">Outcomes that show consistency, practical building, and problem-solving progress.</p>
+        <p class="sec-desc">My academic background and qualifications from various educational institutions.</p>
     </div>
-    <div class="proof-grid">
-        <div class="proof-card" data-aos="zoom-in">
-            <div class="proof-num counter" data-target="5" data-suffix="+">0</div>
-            <div class="proof-label">Projects Completed</div>
-            <div class="proof-note">Frontend and full-stack projects focused on usability and clean implementation.</div>
+    <div class="edu-grid">
+        <!-- University -->
+        <div class="edu-card" data-aos="zoom-in" data-aos-delay="200">
+            <div class="edu-icon"><i class="fas fa-university"></i></div>
+            <div class="edu-info">
+                <h3>B.Tech in Computer Science Engineering</h3>
+                <div class="edu-school">Lovely Professional University (LPU)</div>
+                <div class="edu-date"><i class="far fa-calendar-alt"></i> Expected Graduation: 2027</div>
+                <p class="edu-details">Currently focusing on Full Stack Development, Data Structures, and Algorithms to build professional-grade applications.</p>
+                <div class="edu-badge">CGPA: 6.6</div>
+            </div>
         </div>
-        <div class="proof-card" data-aos="zoom-in" data-aos-delay="100">
-            <div class="proof-num counter" data-target="100" data-suffix="+">0</div>
-            <div class="proof-label">DSA Problems Solved</div>
-            <div class="proof-note">Regular coding practice to sharpen logic, data structures, and algorithmic thinking.</div>
+        
+        <!-- 12th Grade -->
+        <div class="edu-card" data-aos="zoom-in" data-aos-delay="400">
+            <div class="edu-icon"><i class="fas fa-school"></i></div>
+            <div class="edu-info">
+                <h3>Senior Secondary Education (Class XII)</h3>
+                <div class="edu-school">C K S D Public School, Baghpat (CBSE)</div>
+                <div class="edu-date"><i class="far fa-calendar-alt"></i> 2021 - 2022</div>
+                <p class="edu-details">Focused on PCM (Physics, Chemistry, Mathematics) with a scored percentage of 83%.</p>
+            </div>
         </div>
-        <div class="proof-card" data-aos="zoom-in" data-aos-delay="200">
-            <div class="proof-num counter" data-target="3" data-suffix="+">0</div>
-            <div class="proof-label">Industry Certifications</div>
-            <div class="proof-note">Verified certificates in web development, UX design, and AI tools.</div>
-        </div>
-        <div class="proof-card" data-aos="zoom-in" data-aos-delay="300">
-            <div class="proof-num counter" data-target="2" data-suffix="+">0</div>
-            <div class="proof-label">Role Readiness</div>
-            <div class="proof-note">Open to internship and entry-level full-time opportunities, remote or on-site.</div>
+
+        <!-- 10th Grade -->
+        <div class="edu-card" data-aos="zoom-in" data-aos-delay="600">
+            <div class="edu-icon"><i class="fas fa-graduation-cap"></i></div>
+            <div class="edu-info">
+                <h3>Secondary Education (Class X)</h3>
+                <div class="edu-school">C K S D Public School, Baghpat (CBSE)</div>
+                <div class="edu-date"><i class="far fa-calendar-alt"></i> 2019 - 2020</div>
+                <p class="edu-details">Completed with a focus on core subjects and a scored percentage of 73%.</p>
+            </div>
         </div>
     </div>
 </section>
 
+<!-- ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â TRAINING ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â -->
+<section id="training">
+    <div class="sec-header" data-aos="fade-up">
+        <span class="sec-tag">Vocational Training</span>
+        <h2 class="sec-title">My <span>Training</span></h2>
+        <div class="sec-line"></div>
+        <p class="sec-desc">Specialized training programs focusing on industrial skills and advanced development techniques.</p>
+    </div>
+    <div class="training-grid">
+        <div class="train-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="train-icon"><i class="fas fa-laptop-code"></i></div>
+            <div class="train-info">
+                <h3>C++ Programming, OOPs & DSA</h3>
+                <div class="train-org">CSE Pathshala</div>
+                <div class="train-date"><i class="far fa-calendar-alt"></i> 1 Month Intensity Training</div>
+                <p class="train-details">Completed a comprehensive one-month training program focused on C++ Programming, Object-Oriented Programming (OOPs), and Data Structures and Algorithms (DSA). This training established a solid foundation for large-scale application development and efficient problem-solving.</p>
+                <button class="cert-btn cert-btn-view" style="margin-top: 1rem; width: auto;" onclick="openCert('CSE Pathshala Certificate.pdf','CSE Pathshala Certificate','pdf')"><i class="fas fa-eye"></i> View Certificate</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â PROJECTS ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â -->
 <section id="projects" class="section-alt">
-    <div class="sec-header">
+    <div class="sec-header" data-aos="fade-up">
         <span class="sec-tag">My Work</span>
         <h2 class="sec-title">Featured <span>Projects</span></h2>
         <div class="sec-line"></div>
         <p class="sec-desc">Some of my recent work highlighting my skills in full-stack development, logic building, and responsive design.</p>
     </div>
     <div class="projects-grid">
-        <!-- 1. Weather API — GitHub + Live Link -->
-        <div class="project-card" data-aos="fade-up">
+        <!-- 1. Weather API ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â GitHub + Live Link -->
+        <div class="project-card" data-aos="fade-up" data-aos-delay="200">
             <div class="status-tag live">🟢 Live</div>
             <div class="project-img">
-                <img src="project_weather.png" alt="Weather App">
+                <video src="https://cdn.dribbble.com/userupload/46292658/file/3058c995ec0b5d99a82b075c66c4b734.mp4" autoplay loop muted playsinline poster="project_weather.png" style="width: 100%; height: 100%; object-fit: cover;"></video>
                 <div class="project-img-overlay">
                     <a href="https://github.com/414tanu" target="_blank" class="overlay-btn" title="View on GitHub"><i class="fab fa-github"></i></a>
                     <a href="https://weather-api-4xxv-git-main-414tanus-projects.vercel.app/" target="_blank" class="overlay-btn" title="Live Demo"><i class="fas fa-external-link-alt"></i></a>
@@ -822,11 +886,11 @@
             </div>
         </div>
 
-        <!-- 2. Student Management System — GitHub only -->
-        <div class="project-card" data-aos="fade-up" data-aos-delay="100">
+        <!-- 2. Student Management System ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â GitHub only -->
+        <div class="project-card" data-aos="fade-up" data-aos-delay="400">
             <div class="status-tag in-progress">🟡 In Progress</div>
             <div class="project-img">
-                <img src="project_student.png" alt="Student Management">
+                <img src="project_student_dark.png" alt="Student Management" loading="lazy" decoding="async">
                 <div class="project-img-overlay">
                     <a href="https://github.com/414tanu" target="_blank" class="overlay-btn" title="View on GitHub"><i class="fab fa-github"></i></a>
                 </div>
@@ -848,11 +912,12 @@
             </div>
         </div>
 
-        <!-- 3. Peer-to-Peer Learning — GitHub only -->
-        <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+        <!-- 3. Peer-to-Peer Learning ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â GitHub only -->
+        <div class="project-card" data-aos="fade-up" data-aos-delay="600">
             <div class="status-tag in-progress">🟡 In Progress</div>
             <div class="project-img">
-                <img src="project_p2p.png" alt="P2P Learning">
+                <img src="project_p2p_dark.png" alt="P2P Learning" loading="lazy" decoding="async" style="position: absolute; inset: 0; z-index: 1;">
+                <lottie-player src="https://assets1.lottiefiles.com/packages/lf20_SkhtL8.json" background="transparent" speed="1" style="width: 100%; height: 100%; position: relative; z-index: 2;" loop autoplay></lottie-player>
                 <div class="project-img-overlay">
                     <a href="https://github.com/414tanu" target="_blank" class="overlay-btn" title="View on GitHub"><i class="fab fa-github"></i></a>
                 </div>
@@ -874,23 +939,23 @@
             </div>
         </div>
 
-        <!-- 4. Science Literacy — GitHub only -->
-        <div class="project-card" data-aos="fade-up" data-aos-delay="300">
-            <div class="status-tag in-progress">🟡 In Progress</div>
+
+        <!-- 4. Science Literacy - GitHub only -->
+        <div class="project-card" data-aos="fade-up" data-aos-delay="800">
             <div class="project-img">
-                <img src="project_science.png" alt="Science Literacy">
+                <img src="project_science_dark.png" alt="Science Literacy" loading="lazy" decoding="async">
                 <div class="project-img-overlay">
                     <a href="https://github.com/414tanu" target="_blank" class="overlay-btn" title="View on GitHub"><i class="fab fa-github"></i></a>
                 </div>
             </div>
             <div class="project-body">
                 <h3 class="project-title">Science Literacy</h3>
-                <p class="project-desc">An educational platform designed to promote science literacy, integrated with various APIs for dynamic content delivery.</p>
+                <p class="project-desc">An educational platform designed to promote science literacy, integrated with APIs for dynamic and engaging learning content.</p>
                 <div style="margin: 0.8rem 0; font-size: 0.85rem; color: var(--text-muted);">
                     <strong>Tech Stack:</strong> React, Node.js, MongoDB, APIs
                 </div>
                 <div class="project-tags">
-                    <span class="p-tag">React+Node</span>
+                    <span class="p-tag">React + Node</span>
                     <span class="p-tag">MongoDB</span>
                     <span class="p-tag">APIs</span>
                 </div>
@@ -902,22 +967,40 @@
     </div>
 </section>
 
-<!-- ════════════ CERT MODAL ════════════ -->
-<div class="cert-modal-overlay" id="certModal">
-    <div class="cert-modal">
-        <div class="cert-modal-header">
-            <div class="cert-modal-title" id="certModalTitle">Certificate</div>
-            <div class="cert-modal-actions">
-                <a href="#" id="certModalDl" download class="cert-modal-dl"><i class="fas fa-download"></i> Download</a>
-                <button class="cert-modal-close" id="certModalClose" title="Close">&#x2715;</button>
-            </div>
-        </div>
-        <div class="cert-modal-body" id="certModalBody"></div>
+<!-- ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â PROOF OF WORK ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â -->
+<section id="proof">
+    <div class="sec-header" data-aos="fade-up">
+        <span class="sec-tag">Why Me</span>
+        <h2 class="sec-title">Proof Of <span>Work</span></h2>
+        <div class="sec-line"></div>
+        <p class="sec-desc">Outcomes that show consistency, practical building, and problem-solving progress.</p>
     </div>
-</div>
+    <div class="proof-grid">
+        <div class="proof-card" data-aos="zoom-in" data-aos-delay="200">
+            <div class="proof-num counter" data-target="4" data-suffix="+">0</div>
+            <div class="proof-label">Projects Completed</div>
+            <div class="proof-note">Frontend and full-stack projects focused on usability and clean implementation.</div>
+        </div>
+        <div class="proof-card" data-aos="zoom-in" data-aos-delay="400">
+            <div class="proof-num counter" data-target="100" data-suffix="+">0</div>
+            <div class="proof-label">DSA Problems Solved</div>
+            <div class="proof-note">Regular coding practice to sharpen logic, data structures, and algorithmic thinking.</div>
+        </div>
+        <div class="proof-card" data-aos="zoom-in" data-aos-delay="600">
+            <div class="proof-num counter" data-target="3" data-suffix="+">0</div>
+            <div class="proof-label">Industry Certifications</div>
+            <div class="proof-note">Verified certificates in web development, UX design, and AI tools.</div>
+        </div>
+        <div class="proof-card" data-aos="zoom-in" data-aos-delay="800">
+            <div class="proof-num counter" data-target="2" data-suffix="+">0</div>
+            <div class="proof-label">Role Readiness</div>
+            <div class="proof-note">Open to internship and entry-level full-time opportunities, remote or on-site.</div>
+        </div>
+    </div>
+</section>
 
-<!-- ════════════ CERTIFICATES ════════════ -->
-<section id="certificates">
+<!-- ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â CERTIFICATES ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â -->
+<section id="certificates" class="section-alt">
     <div class="sec-header" data-aos="fade-up">
         <span class="sec-tag">My Credentials</span>
         <h2 class="sec-title">Certifications</h2>
@@ -926,7 +1009,7 @@
     </div>
     <div class="certs-grid">
         <!-- Web Dev -->
-        <div class="cert-card" data-aos="fade-up">
+        <div class="cert-card" data-aos="fade-up" data-aos-delay="200">
             <div class="cert-card-top">
                 <div class="cert-icon"><i class="fas fa-code"></i></div>
                 <div class="cert-info">
@@ -936,11 +1019,11 @@
                 </div>
             </div>
             <div class="cert-actions">
-                <button class="cert-btn cert-btn-view" onclick="openCert('ApnaCollege WebDev Certiicate.pdf','Web Development Certification — Apna College','pdf')"><i class="fas fa-eye"></i> View</button>
+                <button class="cert-btn cert-btn-view" onclick="openCert('ApnaCollege WebDev Certiicate.pdf','Web Development Certification - Apna College','pdf')"><i class="fas fa-eye"></i> View</button>
             </div>
         </div>
         <!-- Google UX -->
-        <div class="cert-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="cert-card" data-aos="fade-up" data-aos-delay="350">
             <div class="cert-card-top">
                 <div class="cert-icon"><i class="fab fa-google"></i></div>
                 <div class="cert-info">
@@ -954,7 +1037,7 @@
             </div>
         </div>
         <!-- AI Tools -->
-        <div class="cert-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="cert-card" data-aos="fade-up" data-aos-delay="500">
             <div class="cert-card-top">
                 <div class="cert-icon"><i class="fas fa-robot"></i></div>
                 <div class="cert-info">
@@ -964,11 +1047,11 @@
                 </div>
             </div>
             <div class="cert-actions">
-                <button class="cert-btn cert-btn-view" onclick="openCert('GFG AI Tools certificate.pdf','AI Tools — GeeksforGeeks','pdf')"><i class="fas fa-eye"></i> View</button>
+                <button class="cert-btn cert-btn-view" onclick="openCert('GFG AI Tools certificate.pdf','AI Tools - GeeksforGeeks','pdf')"><i class="fas fa-eye"></i> View</button>
             </div>
         </div>
         <!-- Cloud Computing -->
-        <div class="cert-card" data-aos="fade-up" data-aos-delay="400">
+        <div class="cert-card" data-aos="fade-up" data-aos-delay="650">
             <div class="cert-card-top">
                 <div class="cert-icon"><i class="fas fa-cloud"></i></div>
                 <div class="cert-info">
@@ -981,10 +1064,8 @@
                 <button class="cert-btn cert-btn-view" onclick="openCert('Cloud Computing certificate.pdf','Cloud Computing Certificate','pdf')"><i class="fas fa-eye"></i> View</button>
             </div>
         </div>
-
-
         <!-- Figma -->
-        <div class="cert-card" data-aos="fade-up" data-aos-delay="700">
+        <div class="cert-card" data-aos="fade-up" data-aos-delay="800">
             <div class="cert-card-top">
                 <div class="cert-icon"><i class="fab fa-figma"></i></div>
                 <div class="cert-info">
@@ -1000,8 +1081,8 @@
     </div>
 </section>
 
-<!-- ════════════ ACHIEVEMENTS ════════════ -->
-<section id="achievements" class="section-alt">
+<!-- ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â ACHIEVEMENTS ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â -->
+<section id="achievements">
     <div class="sec-header" data-aos="fade-up">
         <span class="sec-tag">My Accomplishments</span>
         <h2 class="sec-title">Achievements</h2>
@@ -1010,45 +1091,44 @@
     </div>
     <div class="achievements-grid">
         <!-- LeetCode Achievement -->
-        <div class="ach-card" data-aos="fade-up">
+        <div class="ach-card" data-aos="fade-up" data-aos-delay="200">
             <div class="ach-icon"><i class="fas fa-code"></i></div>
             <h3 class="ach-title">LeetCode Badges</h3>
             <p class="ach-desc">Showcasing strong algorithmic proficiency and analytical skills through consistent daily problem-solving on LeetCode. Earned multiple milestone badges reflecting dedication to continuous learning and technical growth. Click to view or download.</p>
             <div class="ach-badge-grid">
-                <img src="Leetcode 100days.png" alt="100 Days Badge" onclick="openCert('Leetcode 100days.png','100 Days Badge','img')" title="Click to view">
-                <img src="Leetcode 50 days 2026.png" alt="50 Days Badge 2026" onclick="openCert('Leetcode 50 days 2026.png','50 Days Badge 2026','img')" title="Click to view">
-                <img src="Pleetcode badge.png" alt="Leetcode Badge" onclick="openCert('Pleetcode badge.png','Leetcode Badge','img')" title="Click to view">
+                <img src="Leetcode 100days.png" alt="100 Days Badge" loading="lazy" decoding="async" onclick="openCert('Leetcode 100days.png','100 Days Badge','img')" title="Click to view">
+                <img src="Leetcode 50 days 2026.png" alt="50 Days Badge 2026" loading="lazy" decoding="async" onclick="openCert('Leetcode 50 days 2026.png','50 Days Badge 2026','img')" title="Click to view">
             </div>
             <div class="ach-footer">
-                <a href="https://leetcode.com/u/tan_u414/" target="_blank" class="ach-link">View full profile on LeetCode <i class="fas fa-external-link-alt"></i></a>
+                <a href="https://leetcode.com/u/tan_u414/" target="_blank" rel="noopener noreferrer" class="ach-link">View full profile on LeetCode <i class="fas fa-external-link-alt"></i></a>
             </div>
         </div>
 
         <!-- NGO Achievement -->
-        <div class="ach-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="ach-card" data-aos="fade-up" data-aos-delay="400">
             <div class="ach-icon"><i class="fas fa-tree"></i></div>
             <h3 class="ach-title">NGO Plantation & Volunteering</h3>
             <p class="ach-desc">Volunteered with Harit Pran Trust. Managed tree plantation drives, monitored plant health, distributed saplings, and maintained detailed records of plant adoption and care tracking.</p>
             <div class="ach-image-previews">
-                <img src="ngo_cert_appreciation.jpg" class="ach-preview-img" alt="Certificate of Appreciation" onclick="openCert('ngo_cert_appreciation.jpg','Certificate of Appreciation','img')">
-                <img src="ngo_cert_membership.jpg" class="ach-preview-img" alt="Membership Certificate" onclick="openCert('ngo_cert_membership.jpg','Membership Certificate','img')">
-                <img src="ngo_photo_receiving.jpg" class="ach-preview-img" alt="Plantation Drive" onclick="openCert('ngo_photo_receiving.jpg','Plantation Drive','img')">
+                <img src="ngo_cert_appreciation.jpg" class="ach-preview-img" loading="lazy" decoding="async" alt="Certificate of Appreciation" onclick="openCert('ngo_cert_appreciation.jpg','Certificate of Appreciation','img')">
+                <img src="ngo_cert_membership.jpg" class="ach-preview-img" loading="lazy" decoding="async" alt="Membership Certificate" onclick="openCert('ngo_cert_membership.jpg','Membership Certificate','img')">
+                <img src="ngo_photo_receiving.jpg" class="ach-preview-img" loading="lazy" decoding="async" alt="Plantation Drive" onclick="openCert('ngo_photo_receiving.jpg','Plantation Drive','img')">
             </div>
             <div class="ach-year">2024</div>
         </div>
     </div>
 </section>
 
-<!-- ════════════ CONTACT ════════════ -->
-<section id="contact">
+<!-- ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â CONTACT ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â -->
+<section id="contact" class="section-alt">
     <div class="sec-header" data-aos="fade-up">
         <span class="sec-tag">Say Hello</span>
         <h2 class="sec-title">Let's <span>Connect</span></h2>
         <div class="sec-line"></div>
-        <p class="sec-desc">Have a project in mind or want to collaborate? Feel free to reach out — I'd love to hear from you!</p>
+        <p class="sec-desc">Have a project in mind or want to collaborate? Feel free to reach out - I'd love to hear from you!</p>
     </div>
     <div class="contact-wrapper">
-        <div class="contact-info" data-aos="fade-right">
+        <div class="contact-info" data-aos="fade-right" data-aos-delay="200">
             <h3>Let's <span>Connect</span></h3>
             <p>I am currently open to internships and entry-level full-time roles, and available for collaboration on impactful products.</p>
             <div class="contact-detail-list">
@@ -1070,7 +1150,7 @@
                 <a href="https://www.linkedin.com/in/tanu414/" target="_blank" class="social-link" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
             </div>
         </div>
-        <div class="contact-form" data-aos="fade-left">
+        <div class="contact-form" data-aos="fade-left" data-aos-delay="400">
             <form id="contactForm">
                 <div class="form-row">
                     <div class="form-group">
@@ -1102,22 +1182,48 @@
     </div>
 </section>
 
-<!-- ════════════ FOOTER ════════════ -->
+<!-- ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â FOOTER ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â -->
 <footer>
     <div class="footer-logo"><span>T</span>anu<span>.</span></div>
-    <p>Made with <span class="heart">❤️</span> by Tanu &nbsp;|&nbsp; &copy; 2026 All Rights Reserved</p>
+    <p>Made with ❤️ by Tanu &nbsp;|&nbsp; &copy; 2026 All Rights Reserved</p>
 </footer>
 
-<button id="scrollToTop" title="Go to top"><i class="fas fa-chevron-up"></i></button>
+<button id="scrollToTop" title="Go to top"><i class="fas fa-rocket"></i></button>
+
+<div class="cert-modal-overlay" id="certModal" role="dialog" aria-modal="true" aria-labelledby="certModalTitle">
+    <div class="cert-modal">
+        <div class="cert-modal-header">
+            <div class="cert-modal-title" id="certModalTitle">Certificate Preview</div>
+            <div class="cert-modal-actions">
+                <a id="certModalDl" class="cert-modal-dl" href="#" download>
+                    <i class="fas fa-download"></i> Download
+                </a>
+                <a id="certModalOpen" class="cert-modal-open" href="#" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-arrow-up-right-from-square"></i> Open
+                </a>
+                <button id="certModalRotate" class="cert-modal-rotate" type="button" style="display:none;">
+                    <i class="fas fa-rotate-right"></i> Rotate
+                </button>
+                <button class="cert-modal-close" id="certModalClose" type="button" aria-label="Close preview">&times;</button>
+            </div>
+        </div>
+        <div class="cert-modal-body" id="certModalBody"></div>
+    </div>
+</div>
 
 <script>
-    // Lightweight Intersection Observer for scroll animations
-    const observerOptions = { threshold: 0.15, rootMargin: '0px 0px -10% 0px' };
+    // Enhanced Intersection Observer for Premium Scroll Animations
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -5% 0px' };
     const observer = new IntersectionObserver((entries, obs) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('aos-animate');
-                obs.unobserve(entry.target);
+                const el = entry.target;
+                const delay = el.getAttribute('data-aos-delay') || '0';
+                const duration = el.getAttribute('data-aos-duration') || '1000';
+                el.style.transitionDelay = `${delay}ms`;
+                el.style.transitionDuration = `${duration}ms`;
+                el.classList.add('aos-animate');
+                obs.unobserve(el);
             }
         });
     }, observerOptions);
@@ -1135,17 +1241,17 @@
     if (window.particlesJS) {
         particlesJS('particles-js', {
             "particles": {
-                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "number": { "value": 42, "density": { "enable": true, "value_area": 900 } },
                 "color": { "value": "#f97316" },
                 "shape": { "type": "circle" },
-                "opacity": { "value": 0.2, "random": false },
-                "size": { "value": 3, "random": true },
-                "line_linked": { "enable": true, "distance": 150, "color": "#f97316", "opacity": 0.1, "width": 1 },
-                "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
+                "opacity": { "value": 0.16, "random": false },
+                "size": { "value": 2.2, "random": true },
+                "line_linked": { "enable": true, "distance": 120, "color": "#f97316", "opacity": 0.08, "width": 1 },
+                "move": { "enable": true, "speed": 1.2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
             },
             "interactivity": {
                 "detect_on": "canvas",
-                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": false, "mode": "push" }, "resize": true },
                 "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 0.4 } }, "push": { "particles_nb": 4 } }
             },
             "retina_detect": true
@@ -1160,7 +1266,7 @@
     window.addEventListener('DOMContentLoaded', () => {
         const loader = document.getElementById('siteLoader');
         if (!loader) return;
-        setTimeout(() => loader.classList.add('hidden'), 2200);
+        requestAnimationFrame(() => loader.classList.add('hidden'));
     });
 
     // Mobile Menu
@@ -1210,7 +1316,7 @@
         });
     });
 
-    // Count-up animation for proof and hero stats
+    // Smooth Exponential Count-up animation
     const counters = document.querySelectorAll('.counter');
     const counterObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach((entry) => {
@@ -1218,12 +1324,13 @@
             const el = entry.target;
             const target = parseInt(el.dataset.target || '0', 10);
             const suffix = el.dataset.suffix || '';
-            const duration = 1400;
+            const duration = 2000;
             const start = performance.now();
-
+            
+            // Exponential Out Easing: t => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))
             const update = (time) => {
                 const progress = Math.min((time - start) / duration, 1);
-                const eased = 1 - Math.pow(1 - progress, 3);
+                const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
                 el.textContent = `${Math.floor(eased * target)}${suffix}`;
                 if (progress < 1) {
                     requestAnimationFrame(update);
@@ -1237,56 +1344,80 @@
     }, { threshold: 0.35 });
     counters.forEach((counter) => counterObserver.observe(counter));
 
-    // 3D Tilt Effect for Project Cards
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach(card => {
-        card.addEventListener('mousemove', e => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const rotateX = ((y - centerY) / centerY) * -6; // Subtle 6 degree max tilt
-            const rotateY = ((x - centerX) / centerX) * 6;
-            
-            card.style.transition = 'none'; // precise tracking
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02) translateY(-5px)`;
+    // Lightweight tilt effect (desktop only)
+    const canTilt = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (canTilt) {
+        const tiltItems = document.querySelectorAll('.project-card, .edu-card, .train-card');
+        tiltItems.forEach((item) => {
+            let frame = null;
+            item.addEventListener('mousemove', (e) => {
+                if (frame) return;
+                frame = requestAnimationFrame(() => {
+                    const rect = item.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -5;
+                    const rotateY = ((x - centerX) / centerX) * 5;
+                    item.style.transition = 'none';
+                    item.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                    frame = null;
+                });
+            });
+            item.addEventListener('mouseleave', () => {
+                item.style.transition = 'transform 0.45s ease';
+                item.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
+            });
         });
-        
-        card.addEventListener('mouseleave', () => {
-            card.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1)';
-            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1) translateY(0)';
-        });
-        
-        card.addEventListener('mouseenter', () => {
-            card.style.transition = 'transform 0.1s cubic-bezier(0.25, 0.8, 0.25, 1)';
-        });
-    });
+    }
 
     // Certificate modal logic
+    let isImagePreview = false;
     function openCert(file, title, type) {
         const modal = document.getElementById('certModal');
         const body = document.getElementById('certModalBody');
         const dl = document.getElementById('certModalDl');
+        const openBtn = document.getElementById('certModalOpen');
+        const rotateBtn = document.getElementById('certModalRotate');
+        if (!modal || !body || !dl || !openBtn || !rotateBtn) return;
+        const safeFile = encodeURI(file);
         document.getElementById('certModalTitle').textContent = title;
-        dl.href = file;
+        dl.href = safeFile;
         dl.download = file;
+        openBtn.href = safeFile;
+        isImagePreview = type === 'img';
+        rotateBtn.style.display = isImagePreview ? 'inline-flex' : 'none';
         body.innerHTML = type === 'img'
-            ? `<img src="${file}" alt="${title}">`
-            : `<iframe src="${file}"></iframe>`;
+            ? `<img id="certPreviewImage" src="${safeFile}" alt="${title}">`
+            : `<iframe src="${safeFile}" title="${title}"></iframe>`;
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
     window.openCert = openCert;
-    document.getElementById('certModalClose').addEventListener('click', closeCertModal);
-    document.getElementById('certModal').addEventListener('click', function(e) {
-        if (e.target === this) closeCertModal();
-    });
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeCertModal(); });
+    const certModalClose = document.getElementById('certModalClose');
+    const certModal = document.getElementById('certModal');
+    const certModalRotate = document.getElementById('certModalRotate');
+    if (certModalClose && certModal) {
+        certModalClose.addEventListener('click', closeCertModal);
+        certModal.addEventListener('click', function(e) {
+            if (e.target === this) closeCertModal();
+        });
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeCertModal(); });
+    }
+    if (certModalRotate) {
+        certModalRotate.addEventListener('click', () => {
+            if (!isImagePreview) return;
+            const img = document.getElementById('certPreviewImage');
+            if (img) img.classList.toggle('rotated');
+        });
+    }
     function closeCertModal() {
         const modal = document.getElementById('certModal');
+        const body = document.getElementById('certModalBody');
+        if (!modal || !body) return;
         modal.classList.remove('active');
-        document.getElementById('certModalBody').innerHTML = '';
+        body.innerHTML = '';
         document.body.style.overflow = '';
     }
 
@@ -1337,7 +1468,7 @@ document.getElementById("contactForm").addEventListener("submit", function(e) {
         // Smooth animation
         status.style.opacity = "0";
         status.style.transform = "translateY(10px)";
-        status.innerHTML = "🚀 Message sent! I’ll get back to you soon.";
+        status.innerHTML = "Message sent! I'll get back to you soon.";
 
         setTimeout(() => {
             status.style.opacity = "1";
@@ -1345,7 +1476,7 @@ document.getElementById("contactForm").addEventListener("submit", function(e) {
         }, 100);
 
         // Button success
-        btn.innerHTML = "✔ Sent!";
+        btn.innerHTML = "Sent!";
         btn.style.background = "linear-gradient(110deg, #22c55e 0%, #16a34a 50%, #22c55e 100%)";
 
         setTimeout(() => {
@@ -1364,7 +1495,7 @@ document.getElementById("contactForm").addEventListener("submit", function(e) {
     })
     .catch((error) => {
         console.error("EmailJS Error:", error);
-        status.innerHTML = "❌ Failed: " + (error.text || error.message || "Unknown error");
+        status.innerHTML = "Failed: " + (error.text || error.message || "Unknown error");
         btn.innerHTML = "<i class='fas fa-paper-plane'></i> Send Message";
         btn.disabled = false;
     });
